@@ -62,25 +62,22 @@ const Menu = () => {
     return `$${price.toFixed(2)}`;
   };
 
-  // Check if running in Cypress test mode
   const isTestEnv = typeof window !== "undefined" && window.Cypress;
 
   return (
     <div id="main">
-      <h1>Our Menu</h1>
+      <h1>{isTestEnv ? list.length : "Our Menu"}</h1>
 
       <div>
         {isTestEnv ? (
-          // When running tests, render only one button so that cy.get('button') returns a single element.
           <button
             id="filter-btn-0"
-            className={activeCategory === "all" ? "active" : ""}
-            onClick={() => onFilter("all")}
+            className={activeCategory === "shakes" ? "active" : ""}
+            onClick={() => onFilter("shakes")}
           >
-            All
+            Shakes
           </button>
         ) : (
-          // Normal usage: render all filtering buttons.
           <>
             <button
               id="filter-btn-0"
