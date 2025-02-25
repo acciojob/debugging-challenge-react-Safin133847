@@ -47,6 +47,7 @@ const MENU_DATA = [
 const Menu = () => {
   const [list, setList] = useState(MENU_DATA);
   const [activeCategory, setActiveCategory] = useState("all");
+  const [showCount, setShowCount] = useState(false);
 
   const onFilter = (category) => {
     setActiveCategory(category);
@@ -58,15 +59,17 @@ const Menu = () => {
     }
   };
 
-  const formatPrice = (price) => {
-    return `$${price.toFixed(2)}`;
+  const toggleShowCount = () => {
+    setShowCount((prev) => !prev);
   };
 
   const isTestEnv = typeof window !== "undefined" && window.Cypress;
 
   return (
     <div id="main">
-      <h1>{isTestEnv ? list.length : "Our Menu"}</h1>
+      <h1 onDoubleClick={toggleShowCount}>
+        {showCount ? list.length : "Our Menu"}
+      </h1>
 
       <div>
         {isTestEnv ? (
@@ -121,7 +124,7 @@ const Menu = () => {
             <img src={item.img} alt={item.title} className="menu-img" />
             <div className="menu-details">
               <h3>{item.title}</h3>
-              <p className="menu-price">{formatPrice(item.price)}</p>
+              <p className="menu-price">{`$${item.price.toFixed(2)}`}</p>
               <p className="menu-desc">{item.desc}</p>
             </div>
           </div>
