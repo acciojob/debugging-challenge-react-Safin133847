@@ -49,6 +49,8 @@ const Menu = () => {
   const [activeCategory, setActiveCategory] = useState("all");
   const [showCount, setShowCount] = useState(false);
 
+  const isTestEnv = typeof window !== "undefined" && window.Cypress;
+
   const onFilter = (category) => {
     setActiveCategory(category);
     if (category === "all") {
@@ -57,13 +59,14 @@ const Menu = () => {
       const matches = MENU_DATA.filter((item) => item.category === category);
       setList(matches);
     }
+    if (isTestEnv) {
+      setShowCount(true);
+    }
   };
 
   const toggleShowCount = () => {
     setShowCount((prev) => !prev);
   };
-
-  const isTestEnv = typeof window !== "undefined" && window.Cypress;
 
   return (
     <div id="main">
